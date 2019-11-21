@@ -51,6 +51,13 @@ public class PlayerController : BeatBehaviour
     Vector3 camStartingOffset;
     float prevRotationAngle;
 
+    [SerializeField]
+    [ReadOnly]
+    int multiBeatState;
+
+    [SerializeField]
+    [ReadOnly]
+    bool beatHitConsumed;
 
     private void Start()
     {
@@ -71,7 +78,7 @@ public class PlayerController : BeatBehaviour
 
         if (secondPrototype)
         {
-
+            UpdateMultiBeatAttack(input);
         }
         else
         {
@@ -85,6 +92,62 @@ public class PlayerController : BeatBehaviour
     private void LateUpdate()
     {
         camera.transform.position = rigidbody.position + camStartingOffset;
+    }
+
+    protected override void OnBeatRangeStay()
+    {
+        if(state == State.Attack)
+        {
+            if (secondPrototype)
+            {
+                if(multiBeatState > 0 && (virtualController.GetPackage().RB || (virtualController.GetPackage().X)))
+                {
+                    if (!beatHitConsumed)
+                    {
+                        TriggerCorrectHitEffect();
+                        beatHitConsumed = true;
+                    }
+                }
+            }
+            else
+            {
+                if (virtualController.GetPackage().B)
+                {
+                    if (!beatHitConsumed)
+                    {
+                        TriggerCorrectHitEffect();
+                        beatHitConsumed = true;
+                    }
+                }
+            }
+
+        }
+    }
+
+    protected override void OnBeatRangeEnter()
+    {
+        if(state != State.Attack)
+        {
+            multiBeatState = -10;
+        }
+        else
+        {
+            multiBeatState++;
+            if(multiBeatState == 1)
+            {
+                animator.SetBool(attackBoolParameter, true);
+            }
+            else if(multiBeatState > 4)
+            {
+                timeTracker = 0;
+            }
+        }
+    }
+
+    protected override void OnBeatRangeExit()
+    {
+
+        beatHitConsumed = false;
     }
 
     private void Move(Vector3 inputDir, float force, float maxSpeed)
@@ -215,7 +278,7 @@ public class PlayerController : BeatBehaviour
     {
         if ((input.RB || input.X) && beatRangeCloseness > 0)
         {
-            TryAttack();
+            TryNormalAttack();
         }
 
         if(state == State.Attack)
@@ -230,18 +293,19 @@ public class PlayerController : BeatBehaviour
 
     private void UpdateMultiBeatAttack(InputPackage input)
     {
-        if ((input.RB || input.X))
+        if ((input.RB || input.X) && multiBeatState <= 0)
         {
-            TryAttack();
+             if (state == State.Move || state == State.None)
+             {
+                 state = State.Attack;
+                 timeTracker = 1000;
+                 weapon.SetActive(true);
+                 multiBeatState = 0;
+             }
         }
 
-        if (state == State.Attack)
-        {
-
-        }
     }
 
-    [Button]
     private void TryDash()
     {
         if(state != State.Move && state != State.None)
@@ -254,8 +318,7 @@ public class PlayerController : BeatBehaviour
         animator.SetBool(dashBoolParameter, true);
     }
 
-    [Button]
-    private void TryAttack()
+    private void TryNormalAttack()
     {
         if(state != State.Move && state != State.None)
         {
@@ -268,6 +331,11 @@ public class PlayerController : BeatBehaviour
         weapon.SetActive(true);
     }
 
+    private void TriggerCorrectHitEffect()
+    {
+        Debug.Log("Trigger Hit");
+    }
+
     public enum State
     {
         None,
@@ -275,5 +343,4 @@ public class PlayerController : BeatBehaviour
         Attack,
         Dash
     }
-
 }
