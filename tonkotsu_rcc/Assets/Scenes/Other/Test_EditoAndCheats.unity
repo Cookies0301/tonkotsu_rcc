@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3698f51318e1f094dac63aa581319231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatCalculated: {fileID: 11400000, guid: 18b899342f931d5468930310780e4b2c, type: 2}
+  beatCalculated: {fileID: 11400000, guid: c31c0e173c34a1645848e29515d8351d, type: 2}
 --- !u!4 &108779156
 Transform:
   m_ObjectHideFlags: 0
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 486920422}
   - component: {fileID: 486920423}
   m_Layer: 0
-  m_Name: CheatMenuTEst
+  m_Name: CheatMenuTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,6 +300,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 0
+  virtualController: {fileID: 0}
+  virtualControllerTextures: []
 --- !u!4 &486920424
 Transform:
   m_ObjectHideFlags: 0
@@ -344,6 +346,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testValue: {fileID: 0}
+  testValueTwo: 1
+  three: 1
 --- !u!4 &967691840
 Transform:
   m_ObjectHideFlags: 0
@@ -374,7 +378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1588083257
 Transform:
   m_ObjectHideFlags: 0
@@ -401,7 +405,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5105eccb62aea4b9c92d17641e182e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testValue: {fileID: 0}
+  testValue: {fileID: 108779154}
+  testValueTwo: 0
+  three: 0
 --- !u!1 &1799289243
 GameObject:
   m_ObjectHideFlags: 0

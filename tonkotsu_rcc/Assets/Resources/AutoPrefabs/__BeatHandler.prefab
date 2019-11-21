@@ -47,7 +47,7 @@ MonoBehaviour:
   dontDestroyOnLoad: 0
   timeWindow: 0
   reactionTime: 0
-  beatAnalysis: {fileID: 11400000, guid: afac77c6f33f7234eb365b6be922ed2b, type: 2}
+  beatAnalysis: {fileID: 11400000, guid: c31c0e173c34a1645848e29515d8351d, type: 2}
   spectrumTexture:
   - {fileID: 2800000, guid: 190006a5afa5ba048b41a1882dd34587, type: 3}
   - {fileID: 2800000, guid: 50a191d37bb8c9c4d96edd1fc22c0fc3, type: 3}
