@@ -4,7 +4,6 @@ using UnityEngine;
 using NaughtyAttributes;
 public class PlayerHandler : Singleton<PlayerHandler>
 {
-    [SerializeField] bool spawnPlayer;
     [SerializeField] GameObject autoBeatPlayer, multiBeatPlayer;
 
     [ReadOnly]
@@ -30,7 +29,7 @@ public class PlayerHandler : Singleton<PlayerHandler>
     {
         base.Awake();
 
-        if (spawnPlayer)
+        if (GameSettings.SpawnPlayer)
         {
             var go = Instantiate(autoBeatPlayer);
 
