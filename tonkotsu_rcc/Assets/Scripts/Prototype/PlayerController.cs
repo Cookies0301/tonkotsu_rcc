@@ -67,7 +67,7 @@ public class PlayerController : BeatBehaviour
 
         UpdateNone(input);
         UpdateMove(input);
-        UpdateDash(input, noPerfectInput: secondPrototype);
+        UpdateDash(input, noOnBeatRequired: secondPrototype);
 
         if (secondPrototype)
         {
@@ -188,18 +188,18 @@ public class PlayerController : BeatBehaviour
         return inputDir;
     }
 
-    private void UpdateDash(InputPackage input, bool noPerfectInput)
+    private void UpdateDash(InputPackage input, bool noOnBeatRequired)
     {
-        if(noPerfectInput)
+        if(noOnBeatRequired)
         {
-            if ((input.LB || input.A) && beatRangeCloseness > 0)
+            if ((input.LB || input.A) )
             {
                 TryDash();
             }
         }
         else
         {
-            if ((input.LB || input.A))
+            if ((input.LB || input.A) && beatRangeCloseness > 0)
             {
                 TryDash();
             }
