@@ -46,11 +46,6 @@ public class PlayerController : BeatBehaviour
     [BoxGroup("Weapon")]
     [SerializeField] GameObject weapon;
 
-    new Rigidbody rigidbody;
-    float animationVelocity;
-    Vector3 camStartingOffset;
-    float prevRotationAngle;
-
     [SerializeField]
     [ReadOnly]
     int multiBeatState;
@@ -58,6 +53,13 @@ public class PlayerController : BeatBehaviour
     [SerializeField]
     [ReadOnly]
     bool beatHitConsumed;
+
+    new Rigidbody rigidbody;
+    float animationVelocity;
+    Vector3 camStartingOffset;
+    float prevRotationAngle;
+    float flashValue = 0;
+
 
     private void Start()
     {
@@ -87,6 +89,8 @@ public class PlayerController : BeatBehaviour
 
 
         rigidbody.velocity = new Vector3(rigidbody.velocity.x * rigidbodyDrag, rigidbody.velocity.y, rigidbody.velocity.z * rigidbodyDrag);
+        flashValue = Mathf.Clamp(flashValue -= Time.deltaTime * 300, 0, 100);
+        weapon.GetComponent<Renderer>().material.SetFloat("Flash", flashValue);
     }
 
     private void LateUpdate()
@@ -333,6 +337,7 @@ public class PlayerController : BeatBehaviour
 
     private void TriggerCorrectHitEffect()
     {
+        flashValue = 100;
         Debug.Log("Trigger Hit");
     }
 
