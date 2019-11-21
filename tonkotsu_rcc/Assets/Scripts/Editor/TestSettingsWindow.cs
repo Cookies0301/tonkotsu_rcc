@@ -17,7 +17,7 @@ public class TestSettingsWindow : EditorWindow
     {
         //General Settings
         GUILayout.Label("General Settings:", EditorStyles.boldLabel);
-        GameSettings.EnableSound = EditorGUILayout.Toggle("Enable Sound", GameSettings.EnableSound);
+        GameSettings.DisableSound = EditorGUILayout.Toggle("Enable Sound", GameSettings.DisableSound);
 
         //Spawn Settings
         GUILayout.Label("Spawn Settings:", EditorStyles.boldLabel);

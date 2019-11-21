@@ -31,6 +31,11 @@ public class BeatHandler : Singleton<BeatHandler>
     {
         sourceWave = GetComponent<AudioSource>();
 
+        if(GameSettings.DisableSound)
+        {
+            sourceWave.volume = 0;
+        }
+
         if (!beatAnalysis.Analysed)
         {
             Debug.LogWarning("Beat Analysis was not done. Analysing now...");

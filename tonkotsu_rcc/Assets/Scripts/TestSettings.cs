@@ -1,5 +1,5 @@
 ﻿public class GameSettings
 {
     public static bool SpawnPlayer = false;
-    public static bool EnableSound = true;
+    public static bool DisableSound = false;
 }
