@@ -71,7 +71,7 @@ public class HierarchyIcons
 
                     #region Balance
                     
-                    FieldInfo[] fieldsBalance = GetAllBalance(components, i);
+                    FieldInfo[] fieldsBalance = GetAllBalance(components, i, foundGameObjects);
 
                     FieldInfo[] fieldsSerializeFieldInBalance = GetAllSerializedFields(fieldsBalance);
                     
@@ -119,7 +119,7 @@ public class HierarchyIcons
         
     }
 
-    static FieldInfo[] GetAllBalance(Component[] components, int i)
+    static FieldInfo[] GetAllBalance(Component[] components, int i, GameObject foundGameObjects)
     {
         if(components[i] != null)
         {
