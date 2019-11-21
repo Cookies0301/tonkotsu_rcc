@@ -31,7 +31,7 @@ public class BeatHandler : Singleton<BeatHandler>
     {
         sourceWave = GetComponent<AudioSource>();
 
-        if(GameSettings.DisableSound)
+        if(GameSettingsSingleton.Instance.SavedData.DisableSound)
         {
             sourceWave.volume = 0;
         }
