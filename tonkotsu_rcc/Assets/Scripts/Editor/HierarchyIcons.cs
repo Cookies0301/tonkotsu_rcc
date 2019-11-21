@@ -31,7 +31,7 @@ public class HierarchyIcons
             {
                     #region Required
                     
-                    FieldInfo[] fieldsRequired = GetAllRequired(components, i);
+                    FieldInfo[] fieldsRequired = GetAllRequired(components, i, foundGameObjects);
 
                     FieldInfo[] fieldsSerializeField = GetAllSerializedFields(fieldsRequired);
                     
@@ -104,16 +104,33 @@ public class HierarchyIcons
         }
     }
 
-    static FieldInfo[] GetAllRequired(Component[] components, int i)
+    static FieldInfo[] GetAllRequired(Component[] components, int i, GameObject foundGameObjects)
     {
-        return components[i].GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-        .Where(f => f.GetCustomAttribute<RequiredAttribute>() != null).ToArray();
+        if(components[i] != null)
+        {
+            return components[i].GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            .Where(f => f.GetCustomAttribute<RequiredAttribute>() != null).ToArray();
+        }
+        else
+        {
+            Debug.Log(foundGameObjects.name + "has a broken component at " + i);
+            return new FieldInfo[0];
+        }
+        
     }
 
     static FieldInfo[] GetAllBalance(Component[] components, int i)
     {
-        return components[i].GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-        .Where(f => f.GetCustomAttribute<BalanceAttribute>() != null).ToArray();
+        if(components[i] != null)
+        {
+            return components[i].GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            .Where(f => f.GetCustomAttribute<BalanceAttribute>() != null).ToArray();
+        }
+        else
+        {
+            Debug.Log(foundGameObjects.name + "has a broken component at " + i);
+            return new FieldInfo[0];
+        }
     }
 
     static FieldInfo[] GetAllSerializedFields(FieldInfo[] fieldsArray)
