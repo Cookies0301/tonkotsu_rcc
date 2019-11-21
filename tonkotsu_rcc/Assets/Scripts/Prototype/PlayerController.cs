@@ -59,7 +59,7 @@ public class PlayerController : BeatBehaviour
     Vector3 camStartingOffset;
     float prevRotationAngle;
     float flashValue = 0;
-
+    bool oldQuickTime;
 
     private void Start()
     {
@@ -104,7 +104,9 @@ public class PlayerController : BeatBehaviour
         {
             if (secondPrototype)
             {
-                if(multiBeatState > 0 && (virtualController.GetPackage().RB || (virtualController.GetPackage().X)))
+                bool input = (virtualController.GetPackage().RB || (virtualController.GetPackage().X));
+
+                if (multiBeatState > 0 && input && !oldQuickTime)
                 {
                     if (!beatHitConsumed)
                     {
@@ -112,10 +114,14 @@ public class PlayerController : BeatBehaviour
                         beatHitConsumed = true;
                     }
                 }
+
+                oldQuickTime = input;
             }
             else
             {
-                if (virtualController.GetPackage().B)
+                bool input = virtualController.GetPackage().B;
+
+                if (input && !oldQuickTime)
                 {
                     if (!beatHitConsumed)
                     {
@@ -123,6 +129,8 @@ public class PlayerController : BeatBehaviour
                         beatHitConsumed = true;
                     }
                 }
+
+                oldQuickTime = input;
             }
 
         }
