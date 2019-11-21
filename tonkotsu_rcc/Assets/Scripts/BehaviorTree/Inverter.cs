@@ -1,12 +1,12 @@
-﻿public class Inverter : BaseNode
+﻿public class Inverter : BaseNodes
 {
-    private BaseNode node;
-    public BaseNode Node
+    private BaseNodes node;
+    public BaseNodes Node
     {
         get { return node; }
     }
 
-    public Inverter(BaseNode node)
+    public Inverter(BaseNodes node)
     {
         this.node = node;
     }
