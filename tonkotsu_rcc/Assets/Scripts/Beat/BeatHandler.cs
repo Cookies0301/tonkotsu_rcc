@@ -19,11 +19,13 @@ public class BeatHandler : Singleton<BeatHandler>
 
     private static float timeSample = 0;
 
-    private static AudioSource sourceWave = null;
+    private AudioSource sourceWave = null;
 
-    private static bool beatVisualize = false;
+    private bool beatVisualize = false;
     private bool copy = false;
+    private float[] spectrum = null;
 
+    private List<int> controllerMarkers;
 
     private static List<int> beatListCopy;
 
@@ -43,6 +45,9 @@ public class BeatHandler : Singleton<BeatHandler>
         }
         
         beatListCopy = new List<int>(beatAnalysis.ResultList);
+        spectrum = new float[sourceWave.clip.samples];
+        sourceWave.clip.GetData(spectrum, 0);
+        controllerMarkers = new List<int>();
     }
 
     private void Update()
@@ -60,7 +65,7 @@ public class BeatHandler : Singleton<BeatHandler>
 
     private static bool IsOnBeat(int reactionTime, int timeWindow)
     {
-        timeSample = sourceWave.timeSamples - reactionTime;
+        timeSample = Instance.sourceWave.timeSamples - reactionTime;
         for (int i = 0; i < beatListCopy.Count; i++)
         {
             if (timeSample >= (beatListCopy[i] - timeWindow) &&
@@ -81,7 +86,7 @@ public class BeatHandler : Singleton<BeatHandler>
     public static float BeatRangePercent(int onBeatRangeDelay, int onBeatRangeWindow)
     {
         var beats = Instance.beatAnalysis.ResultList;
-        timeSample = sourceWave.timeSamples - onBeatRangeDelay;
+        timeSample = Instance.sourceWave.timeSamples - onBeatRangeDelay;
         for (int i = 0; i < beats.Count; i++)
         {
             float total = onBeatRangeWindow * 2;
@@ -115,26 +120,59 @@ public class BeatHandler : Singleton<BeatHandler>
         {
             float heightMulti = 100;
             float widthMulti = 1;
-            int sampleJump = 1800;
+            int sampleJump = 600;
+            float viewWidth = Screen.width - visualOffsetX - 10;
 
-            for (int i = 0; i * sampleJump < beatAnalysis.Spectrum.Length; i++)
+            for (int i = -visualOffsetX; i < viewWidth; i++)
             {
-                if (i > Screen.width - 1)
+                if(spectrum.Length < i * sampleJump + sourceWave.timeSamples)
                 {
                     break;
                 }
-                GUI.DrawTexture(new Rect(visualOffsetX + i * widthMulti, 5, widthMulti, heightMulti * beatAnalysis.Spectrum[i * sampleJump]), spectrumTexture[0]);
+
+                if(i * sampleJump +sourceWave.timeSamples < 0)
+                {
+                    continue;
+                }
+
+                int currSample = Mathf.FloorToInt(sourceWave.timeSamples/sampleJump)*sampleJump;
+
+                GUI.DrawTexture(new Rect(visualOffsetX + i * widthMulti, 5, widthMulti, heightMulti * Mathf.Abs(spectrum[(i * sampleJump) + currSample])), spectrumTexture[0]);
             }
+
             for (int j = 0; j < beatAnalysis.ResultList.Count; j++)
             {
-                GUI.DrawTexture(new Rect(visualOffsetX + beatAnalysis.ResultList[j] / sampleJump, 5, widthMulti, heightMulti), spectrumTexture[1]);
+                GUI.DrawTexture(new Rect(visualOffsetX + (beatAnalysis.ResultList[j] - sourceWave.timeSamples) / sampleJump, 5, widthMulti, heightMulti), spectrumTexture[1]);
             }
-            GUI.DrawTexture(new Rect(visualOffsetX + sourceWave.timeSamples / sampleJump, 5, widthMulti, heightMulti * 1.1f), spectrumTexture[2]);
+
+            for (int k = 0; k < controllerMarkers.Count; k++)
+            {
+                int pos = Mathf.FloorToInt((controllerMarkers[k]- sourceWave.timeSamples)/ sampleJump);
+
+                if(visualOffsetX + pos > 0)
+                {
+                    GUI.DrawTexture(new Rect(visualOffsetX + pos, heightMulti*0.8f, widthMulti, heightMulti * 0.3f), spectrumTexture[2]);
+                }
+                else
+                {
+                    controllerMarkers.RemoveAt(k);
+                    k--;
+                }
+
+            }
+
+            GUI.DrawTexture(new Rect(visualOffsetX, 5, widthMulti, heightMulti * 1.1f), spectrumTexture[2]);
         }
+    }
+
+    public static void AddControllerMarker()
+    {
+        if(Instance.controllerMarkers.Count == 0 || Instance.sourceWave.timeSamples - Instance.controllerMarkers[Instance.controllerMarkers.Count-1] > 5000)
+        Instance.controllerMarkers.Add(Instance.sourceWave.timeSamples);
     }
 
     public static void BeatVisualize()
     {
-        beatVisualize = !beatVisualize;
+        Instance.beatVisualize = !Instance.beatVisualize;
     }
 }
