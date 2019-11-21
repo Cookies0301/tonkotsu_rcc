@@ -5,14 +5,17 @@ using NaughtyAttributes;
 using System.Reflection;
 using System.Linq;
 
+//////////////////////
+/// Singleton, visualizes cheats, and methods marked with [CheatAtribute] 
+//////////////////////
+
 public class CheatMenu : Singleton<CheatMenu>
 {
     [SerializeField] VirtualController virtualController;
     [SerializeField] Texture2D[] virtualControllerTextures;
 
-    List<int> markedObjects;
-    List<MethodInfo> methodsList = new List<MethodInfo>();
-    List<Component> componentListToMethod = new List<Component>();
+    List<MethodInfo> methodsList;
+    List<Component> componentListToMethod;
 
     bool cheatMenuOpen;
     bool drawCheatButtons;
@@ -22,7 +25,8 @@ public class CheatMenu : Singleton<CheatMenu>
     {
         base.Awake();
 
-        markedObjects = new List<int>();
+        methodsList = new List<MethodInfo>();
+        componentListToMethod = new List<Component>();
 
         if(virtualController == null)
         {
@@ -35,33 +39,16 @@ public class CheatMenu : Singleton<CheatMenu>
     {
         if (Input.GetKeyDown(KeyCode.F8))
         {
-            GenerateCheats();
             cheatMenuOpen = !cheatMenuOpen;
+
+            if(cheatMenuOpen)
+            {
+                FindCheats();
+            }
         }
     }
 
-    private void OpenCheats()
-    {
-        //Button1: Toggle Virtual Controller Visualization
-        if (GUI.Button(new Rect(10, 10, 150, 50), "Virtual Controller"))
-        {
-            drawController = !drawController;
-
-        }
-        //Button2: Toggle BeatDebugger (visual)
-        if (GUI.Button(new Rect(10, 70, 150, 50), "Visualize Beat"))
-        {
-            BeatHandler.BeatVisualize();
-        }
-        //Button3: ShowCheats (toggle)
-        if (GUI.Button(new Rect(10, 130, 150, 50), "Show Cheats"))
-        {
-            drawCheatButtons = !drawCheatButtons;
-        }
-
-    }
-
-    private void GenerateCheats()
+    private void FindCheats()
     {
         //Find all objects in scene
         var objects = GameObject.FindObjectsOfType((typeof(GameObject)));
@@ -134,20 +121,40 @@ public class CheatMenu : Singleton<CheatMenu>
         {
             virtualController.DrawGUI(virtualControllerTextures);
         }
+    }
+
+    private void OpenCheats()
+    {
+        if (GUI.Button(new Rect(10, 10, 150, 50), "Virtual Controller"))
+        {
+            drawController = !drawController;
+        }
+
+        if (GUI.Button(new Rect(10, 70, 150, 50), "Visualize Beat"))
+        {
+            BeatHandler.BeatVisualize();
+        }
+
+        if (GUI.Button(new Rect(10, 130, 150, 50), "Show Cheats"))
+        {
+            drawCheatButtons = !drawCheatButtons;
+        }
 
     }
+
     private void DrawCheatButtons()
     {
         int offsetX = 0;
         int offsetY = 0;
-        int index = 0;
-        int buttonsInRow = 10;
+        int buttonsInRow = Screen.height/50;
         int allowedButtons = buttonsInRow;
-        foreach(var method in methodsList)
+
+        for (int index = 0; index < methodsList.Count; index++)
         {
-            if(GUI.Button(new Rect(200 + offsetX, 130 + offsetY, 150, 50), method.ToString()))
+            string buttonName = componentListToMethod[index].gameObject.name + " " + methodsList[index].Name.ToString();
+            if(GUI.Button(new Rect(200 + offsetX, 130 + offsetY, 200, 50), buttonName))
             {
-                method.Invoke(componentListToMethod[index], null);
+                methodsList[index].Invoke(componentListToMethod[index], null);
             }
             offsetY += 60;
 
@@ -157,7 +164,6 @@ public class CheatMenu : Singleton<CheatMenu>
                 offsetY = 0;
                 allowedButtons += buttonsInRow;
             }
-            index += 1;
         }
     }
 }

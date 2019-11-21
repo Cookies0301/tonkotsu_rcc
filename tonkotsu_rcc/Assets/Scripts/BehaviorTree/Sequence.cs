@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-public class Sequence : BaseNode
+public class Sequence : BaseNodes
 {
-    private List<BaseNode> nodes = new List<BaseNode>();
+    private List<BaseNodes> nodes = new List<BaseNodes>();
 
-    public Sequence(List<BaseNode> nodes)
+    public Sequence(List<BaseNodes> nodes)
     {
         this.nodes = nodes;
     }
@@ -13,7 +13,7 @@ public class Sequence : BaseNode
     {
         bool childRunning = false;
 
-        foreach (BaseNode node in nodes)
+        foreach (BaseNodes node in nodes)
         {
             switch (node.Evaluate())
             {

@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 
-public class Selector : BaseNode
+public class Selector : BaseNodes
 {
-    private List<BaseNode> nodes = new List<BaseNode>();
+    private List<BaseNodes> nodes = new List<BaseNodes>();
 
-    public Selector(List<BaseNode> nodes)
+    public Selector(List<BaseNodes> nodes)
     {
         this.nodes = nodes;
     }
 
     public override NodeState Evaluate()
     {
-        foreach (BaseNode node in nodes)
+        foreach (BaseNodes node in nodes)
         {
             switch (node.Evaluate())
             {

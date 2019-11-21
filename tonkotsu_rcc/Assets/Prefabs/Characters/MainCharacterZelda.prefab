@@ -8441,6 +8441,7 @@ MonoBehaviour:
   onBeatRangeDelay: 0
   camera: {fileID: 0}
   virtualController: {fileID: 668368666}
+  secondPrototype: 1
   walkForce: 50
   dashForce: 70
   attackForce: 10
