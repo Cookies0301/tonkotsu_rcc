@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1196510fc95a8234295c191cec43f6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 15
+  attackRange: 23
   ragdollForce: 700
   hitRange: 1.25
   ragdoll: {fileID: 8139484677318392416, guid: 992808647fb9a194c94afc8d670bc87a, type: 3}
@@ -2463,11 +2463,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8793851194620615656}
     m_Modifications:
-    - target: {fileID: 4341692930627091707, guid: 01a1dfb82f2831a44898db9c0f9e03e7,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyWeapon
-      objectReference: {fileID: 0}
     - target: {fileID: 6363793857394706114, guid: 01a1dfb82f2831a44898db9c0f9e03e7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2522,6 +2517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341692930627091707, guid: 01a1dfb82f2831a44898db9c0f9e03e7,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyWeapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01a1dfb82f2831a44898db9c0f9e03e7, type: 3}
