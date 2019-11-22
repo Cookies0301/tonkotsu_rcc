@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] bool on = true;
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] float range = 20;
+    [SerializeField] int enemiesPerSpawn = 1;
+    [SerializeField] bool enemiesHaveRandomOffset = false;
+    [ShowIf("enemiesHaveRandomOffset")]
+    [SerializeField] float offsetRange = 1f;
+
+
 
     private void Start()
     {
@@ -36,7 +43,15 @@ public class EnemySpawner : MonoBehaviour
 
             if (spawn)
             {
-                Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+                for (int i = 0; i < enemiesPerSpawn; i++)
+                {
+                    GameObject enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+
+                    if(enemiesHaveRandomOffset)
+                    {
+                        enemy.transform.position += new Vector3(Random.Range(-offsetRange,offsetRange), 0f, Random.Range(-offsetRange,offsetRange));
+                    }
+                }              
             }
         }
     }
