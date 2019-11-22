@@ -45,6 +45,10 @@ public class CheatMenu : Singleton<CheatMenu>
             {
                 FindCheats();
             }
+            else
+            {
+                drawCheatButtons = false;
+            }
         }
 
         if (cheatMenuOpen && virtualController.GetPackage().RB)

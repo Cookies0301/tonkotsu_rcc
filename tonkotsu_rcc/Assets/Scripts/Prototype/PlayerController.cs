@@ -46,7 +46,9 @@ public class PlayerController : BeatBehaviour
     [BoxGroup("Weapon")]
     [SerializeField] GameObject weapon;
 
-    [SerializeField] GameObject particleOnBeatHit;
+    [SerializeField] GameObject particleOnBeatHit, indicator;
+
+    [SerializeField] Vector3 indicatorOffset;
 
     [SerializeField] BeatEffectOnHit[] attackEffects;
 
@@ -168,6 +170,19 @@ public class PlayerController : BeatBehaviour
     protected override void OnBeatRangeExit()
     {
         beatHitConsumed = false;
+
+        if (multiBeatState >= 0)
+        {
+            if(multiBeatState >= 4)
+            {
+                return;
+            }
+
+            if(attackEffects[multiBeatState+1] != BeatEffectOnHit.Nothing)
+            {
+                Instantiate(indicator, transform.position + indicatorOffset, Quaternion.identity, transform);
+            }
+        }
     }
 
     private void Move(Vector3 inputDir, float force, float maxSpeed)
@@ -322,6 +337,11 @@ public class PlayerController : BeatBehaviour
                  weapon.SetActive(true);
                  multiBeatState = 0;
              }
+        }
+
+        if(state == State.Attack)
+        {
+            UpdateRotation(input, maxRotPerAttackPerSec * Time.deltaTime);
         }
     }
 
