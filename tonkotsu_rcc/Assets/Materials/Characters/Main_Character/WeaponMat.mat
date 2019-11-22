@@ -21,6 +21,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
+<<<<<<< Updated upstream
     - Beat: 0.7181
+=======
+    - Beat: 0.7315
+>>>>>>> Stashed changes
     - Flash: 0
     m_Colors: []
