@@ -48,7 +48,7 @@ public class PlayerController : BeatBehaviour
 
     [SerializeField] GameObject particleOnBeatHit, indicator;
 
-    [SerializeField] Vector3 indicatorOffset;
+    [SerializeField] Transform indicatorParent;
 
     [SerializeField] BeatEffectOnHit[] attackEffects;
 
@@ -180,7 +180,9 @@ public class PlayerController : BeatBehaviour
 
             if(attackEffects[multiBeatState+1] != BeatEffectOnHit.Nothing)
             {
-                Instantiate(indicator, transform.position + indicatorOffset, Quaternion.identity, transform);
+                var go = Instantiate(indicator, indicatorParent);
+                go.transform.localPosition = Vector3.zero;
+                go.transform.localScale = new Vector3(1 / transform.lossyScale.x, 1 / transform.lossyScale.y, 1 / transform.lossyScale.z);
             }
         }
     }
