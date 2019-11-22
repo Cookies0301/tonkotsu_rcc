@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6706967257083394026}
   - component: {fileID: 8859160011061754499}
-  - component: {fileID: 152779600}
   - component: {fileID: 152779601}
+  - component: {fileID: 5902760522122732060}
+  - component: {fileID: 2457513047510872615}
   m_Layer: 0
   m_Name: IndicatorV2
   m_TagString: Untagged
@@ -83,18 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &152779600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094502425225703181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 807266cf9246bf64b8ce31f69fba1cc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &152779601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +96,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30cf700521e775d4e886a0ed16d9e102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onBeatRangeWindow: 4000
+  onBeatRangeWindow: 8000
   onBeatRangeDelay: 0
   normalScale: {x: 0.1, y: 0.1, z: 0.1}
   onBeatScale: {x: 0.5, y: 0.5, z: 0.5}
+--- !u!114 &5902760522122732060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094502425225703181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c6d0faa8219034985ae09fcb701d5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  secondsBeforeDestruction: 0.7
+--- !u!114 &2457513047510872615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094502425225703181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d078f37870377e428491cf885e9424c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
