@@ -65,8 +65,8 @@ public class CheatMenu : Singleton<CheatMenu>
 
         Debug.Log("Objects: " + rootObjects.Length);
         
-        GameObject[] gameObjects = AddChildren(rootObjects);
-        AddDontDestroyOnLoadObjects(gameObjects);
+        GameObject[] gameObjectsTemp = AddChildren(rootObjects);
+        GameObject[] gameObjects = AddDontDestroyOnLoadObjects(gameObjectsTemp);
         
 
         //Get all their Components
@@ -106,12 +106,12 @@ public class CheatMenu : Singleton<CheatMenu>
         return foundObjects.ToArray();
     }
 
-    private void AddDescendants(GameObject gameObject, List<GameObject> foundObjects)
+    private void AddDescendants(GameObject gameObject,  List<GameObject> addTo)
     {
         foreach(Transform child in gameObject.transform)
         {
-            foundObjects.Add(child.gameObject);
-            AddDescendants(child.gameObject, foundObjects);
+            addTo.Add(child.gameObject);
+            AddDescendants(child.gameObject, addTo);
         }
     }
 
@@ -145,11 +145,16 @@ public class CheatMenu : Singleton<CheatMenu>
 
         var dontDestroyOnLoadObjects = AddChildren(dontDestroyOnLoadRootObjects);
 
+        Debug.Log("foundObjects 1" + foundObjects.Count);
+        
         for(int i = 0; i < dontDestroyOnLoadObjects.Length; i++)
         {
             foundObjects.Add(dontDestroyOnLoadObjects[i]);
+            Debug.Log("Adding");
         }
         
+        Debug.Log("dont destroy objects" + dontDestroyOnLoadObjects.Length);
+        Debug.Log("foundObjects 2" + foundObjects.Count);
 
         return foundObjects.ToArray();
     }
