@@ -8488,18 +8488,6 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 1371646643}
-    - target: {fileID: 668368667, guid: de6bb40a3313d4743955e4b2d25478a9, type: 3}
-      propertyPath: rayCastMaxDist
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 668368667, guid: de6bb40a3313d4743955e4b2d25478a9, type: 3}
-      propertyPath: walkVelocity
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 668368667, guid: de6bb40a3313d4743955e4b2d25478a9, type: 3}
-      propertyPath: dashVelocity
-      value: 30
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de6bb40a3313d4743955e4b2d25478a9, type: 3}
 --- !u!1 &657996427 stripped
