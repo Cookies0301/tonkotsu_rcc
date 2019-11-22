@@ -21,6 +21,10 @@ public class TestSettingsWindow : EditorWindow
 
         //Spawn Settings
         GUILayout.Label("Spawn Settings:", EditorStyles.boldLabel);
-        GameSettings.Instance.SavedData.SpawnPlayer = EditorGUILayout.Toggle("Spawn Player", GameSettings.Instance.SavedData.SpawnPlayer);       
+        GameSettings.Instance.SavedData.SpawnPlayer = EditorGUILayout.Toggle("Spawn Player", GameSettings.Instance.SavedData.SpawnPlayer);
+
+        //Gameplay Settings
+        GUILayout.Label("Gameplay Settings:", EditorStyles.boldLabel);
+        GameSettings.Instance.SavedData.maxEnemyCount = EditorGUILayout.IntField("Maximum Enemy Count", GameSettings.Instance.SavedData.maxEnemyCount);       
     }
 }
