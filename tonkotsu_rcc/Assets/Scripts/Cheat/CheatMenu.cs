@@ -62,8 +62,6 @@ public class CheatMenu : Singleton<CheatMenu>
     {
         //Find all objects in scene
         var rootObjects = SceneManager.GetActiveScene().GetRootGameObjects();
-
-        Debug.Log("Objects: " + rootObjects.Length);
         
         GameObject[] gameObjectsTemp = AddChildren(rootObjects);
         GameObject[] gameObjects = AddDontDestroyOnLoadObjects(gameObjectsTemp);
@@ -82,8 +80,6 @@ public class CheatMenu : Singleton<CheatMenu>
                     components.Add(component);
                 }
             }
-
-            Debug.Log("Components: " + components.Count);
 
             for (int i = 0; i < components.Count; i++)
             {
@@ -144,18 +140,12 @@ public class CheatMenu : Singleton<CheatMenu>
         }
 
         var dontDestroyOnLoadObjects = AddChildren(dontDestroyOnLoadRootObjects);
-
-        Debug.Log("foundObjects 1" + foundObjects.Count);
         
         for(int i = 0; i < dontDestroyOnLoadObjects.Length; i++)
         {
             foundObjects.Add(dontDestroyOnLoadObjects[i]);
-            Debug.Log("Adding");
         }
         
-        Debug.Log("dont destroy objects" + dontDestroyOnLoadObjects.Length);
-        Debug.Log("foundObjects 2" + foundObjects.Count);
-
         return foundObjects.ToArray();
     }
 
