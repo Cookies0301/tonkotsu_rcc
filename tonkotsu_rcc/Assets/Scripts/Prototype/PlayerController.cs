@@ -355,7 +355,7 @@ public class PlayerController : BeatBehaviour
         flashValue = 100;
 
         if(final)
-        Instantiate(particleOnBeatHit, weapon.transform.position, Quaternion.identity);
+        Instantiate(particleOnBeatHit, weapon.transform.position, transform.rotation);
     }
 
     public enum State
