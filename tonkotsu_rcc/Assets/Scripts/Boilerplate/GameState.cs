@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameState : MonoBehaviour
+public class GameState : Singleton<GameState>
 {
     public static event System.Action onPlayEnter;
 
@@ -27,9 +27,6 @@ public class GameState : MonoBehaviour
         Transition
     }
 
-    //using Unity Singleton Pattern
-    public static GameState Instance = null;
-
     private GameStates currentState = GameStates.Init;
     public GameStates CurrentState
     {
@@ -39,22 +36,11 @@ public class GameState : MonoBehaviour
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        //using Unity Singleton Pattern
-        if (Instance == null)
-        {
-            Debug.Log("Instance is still null - using this object: " + gameObject.name);
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-
-            Debug.Log("GameState Initialised. Current State: " + currentState);
-        }
-        else
-        {
-            Debug.LogWarning("Instance is already filled - destroying this object: " + gameObject.name);
-            Destroy(gameObject);
-        }
+        base.Awake();
+        
+        Debug.Log("GameState Initialised. Current State: " + currentState);
     }
 
     /// <summary>
