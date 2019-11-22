@@ -26,11 +26,11 @@ public class PlayerInput : IInputProvider
         input.RB = newRB;
 
         var newA = GetButton("A");
-        input.AClicked = newA && !oldInput.AClicked;
+        input.AClicked = newA && !oldInput.A;
         input.A = newA;
 
         var newB = GetButton("B");
-        input.BClicked = newB && !oldInput.BClicked;
+        input.BClicked = newB && !oldInput.B;
         input.B = newB;
 
         var newX = GetButton("X");
@@ -58,6 +58,7 @@ public class PlayerInput : IInputProvider
         input.Back = newBack;
 
         oldInput = input;
+
         return input;
     }
 
