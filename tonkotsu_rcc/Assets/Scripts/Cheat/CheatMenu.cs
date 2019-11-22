@@ -46,6 +46,11 @@ public class CheatMenu : Singleton<CheatMenu>
                 FindCheats();
             }
         }
+
+        if (cheatMenuOpen && virtualController.GetPackage().RB)
+        {
+            BeatHandler.AddControllerMarker();
+        }
     }
 
     private void FindCheats()

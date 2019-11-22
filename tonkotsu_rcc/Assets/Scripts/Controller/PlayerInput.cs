@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerInput : IInputProvider
 {
+    private InputPackage oldInput = new InputPackage();
+
     public InputPackage GetPackage()
     {
         InputPackage input = new InputPackage();
@@ -15,20 +17,47 @@ public class PlayerInput : IInputProvider
         input.LT = GetAxis("TriggerLeft");
         input.RT = GetAxis("TriggerRight");
 
-        input.LB = GetButton("LeftBumper");
-        input.RB = GetButton("RightBumper");
+        var newLB = GetButton("LeftBumper");
+        input.LBClicked = newLB && !oldInput.LB;
+        input.LB = newLB;
 
-        input.A = GetButton("A");
-        input.B = GetButton("B");
-        input.X = GetButton("X");
-        input.Y = GetButton("Y");
+        var newRB = GetButton("RightBumper");
+        input.RBClicked = newRB && !oldInput.RB;
+        input.RB = newRB;
 
-        input.LeftStickButton = GetButton("MoveButton");
-        input.RightStickButton = GetButton("CameraButton");
+        var newA = GetButton("A");
+        input.AClicked = newA && !oldInput.AClicked;
+        input.A = newA;
 
-        input.Start = GetButton("Start");
-        input.Back = GetButton("Select");
+        var newB = GetButton("B");
+        input.BClicked = newB && !oldInput.BClicked;
+        input.B = newB;
 
+        var newX = GetButton("X");
+        input.XClicked = newX && !oldInput.X;
+        input.X = newX;
+
+        var newY = GetButton("Y");
+        input.YClicked = newY && !oldInput.Y;
+        input.Y = newY;
+
+        var newLSB = GetButton("MoveButton");
+        input.LeftStickButtonClicked = newLSB && !oldInput.LeftStickButton;
+        input.LeftStickButton = newLSB;
+
+        var newRSB = GetButton("CameraButton");
+        input.RightStickButtonClicked = newRSB && !oldInput.RightStickButton;
+        input.RightStickButton = newRSB;
+
+        var newStart = GetButton("Start");
+        input.StartClicked = newStart && !oldInput.Start;
+        input.Start = newStart;
+
+        var newBack = GetButton("Select");
+        input.BackClicked = newBack && !oldInput.Back;
+        input.Back = newBack;
+
+        oldInput = input;
         return input;
     }
 

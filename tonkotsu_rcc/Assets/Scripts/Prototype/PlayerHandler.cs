@@ -13,15 +13,16 @@ public class PlayerHandler : Singleton<PlayerHandler>
 
     public static Transform Player { get => Instance.GetPlayerTransform(); }
 
-    public static void ChangePrototypePlayer()
+    [CheatMethod]
+    public void ChangePrototypePlayer()
     {
-        if(Instance.playerType == PlayerPrototypeType.AutoBeat)
+        if(Instance.playerType == PlayerPrototypeType.MultiBeat)
         {
-            Instance.ChangeToAutoBeat();
+            ChangeToAutoBeat();
         }
         else
         {
-            Instance.ChangeToMultiBeat();
+            ChangeToMultiBeat();
         }
     }
 
@@ -53,6 +54,14 @@ public class PlayerHandler : Singleton<PlayerHandler>
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ChangePrototypePlayer();
+        }
+    }
+
     private Transform GetPlayerTransform()
     {
         if(Instance.player != null)
@@ -73,11 +82,21 @@ public class PlayerHandler : Singleton<PlayerHandler>
     private void ChangeToAutoBeat()
     {
         playerType = PlayerPrototypeType.AutoBeat;
+        var newP = Instantiate(autoBeatPlayer, player.transform.position, player.transform.rotation);
+        var newPC = newP.GetComponent<PlayerController>();
+        newPC.Camera = player.Camera;
+        Destroy(player.gameObject);
+        player = newPC;
     }
 
     private void ChangeToMultiBeat()
     {
         playerType = PlayerPrototypeType.MultiBeat;
+        var newP = Instantiate(multiBeatPlayer, player.transform.position, player.transform.rotation);
+        var newPC = newP.GetComponent<PlayerController>();
+        newPC.Camera = player.Camera;
+        Destroy(player.gameObject);
+        player = newPC;
     }
 
     public enum PlayerPrototypeType

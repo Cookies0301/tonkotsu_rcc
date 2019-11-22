@@ -11,18 +11,29 @@ public struct InputPackage
     public float RT;
 
     public bool LB;
+    public bool LBClicked;
     public bool RB;
+    public bool RBClicked;
 
     public bool A;
+    public bool AClicked;
     public bool B;
+    public bool BClicked;
     public bool X;
+    public bool XClicked;
     public bool Y;
+    public bool YClicked;
 
     public bool LeftStickButton;
+    public bool LeftStickButtonClicked;
     public bool RightStickButton;
+    public bool RightStickButtonClicked;
 
     public bool Start;
+    public bool StartClicked;
     public bool Back;
+    public bool BackClicked;
+
 
     public static InputPackage Empty { get => new InputPackage(); }
 
@@ -50,4 +61,5 @@ public struct InputPackage
     {
         return RT > 0.3f;
     }
+
 }

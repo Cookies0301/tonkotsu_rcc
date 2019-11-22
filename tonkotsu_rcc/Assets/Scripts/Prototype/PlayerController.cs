@@ -46,6 +46,8 @@ public class PlayerController : BeatBehaviour
     [BoxGroup("Weapon")]
     [SerializeField] GameObject weapon;
 
+    [SerializeField] GameObject particleOnBeatHit;
+
     [SerializeField]
     [ReadOnly]
     int multiBeatState;
@@ -59,7 +61,8 @@ public class PlayerController : BeatBehaviour
     Vector3 camStartingOffset;
     float prevRotationAngle;
     float flashValue = 0;
-    bool oldQuickTime;
+
+    public Camera Camera { get => camera; set => camera = value;}
 
     private void Start()
     {
@@ -104,9 +107,9 @@ public class PlayerController : BeatBehaviour
         {
             if (secondPrototype)
             {
-                bool input = (virtualController.GetPackage().RB || (virtualController.GetPackage().X));
+                bool input = (virtualController.GetPackage().RBClicked || (virtualController.GetPackage().XClicked));
 
-                if (multiBeatState > 0 && input && !oldQuickTime)
+                if (multiBeatState > 0 && input)
                 {
                     if (!beatHitConsumed)
                     {
@@ -114,14 +117,12 @@ public class PlayerController : BeatBehaviour
                         beatHitConsumed = true;
                     }
                 }
-
-                oldQuickTime = input;
             }
             else
             {
-                bool input = virtualController.GetPackage().B;
+                bool input = virtualController.GetPackage().BClicked;
 
-                if (input && !oldQuickTime)
+                if (input)
                 {
                     if (!beatHitConsumed)
                     {
@@ -129,8 +130,6 @@ public class PlayerController : BeatBehaviour
                         beatHitConsumed = true;
                     }
                 }
-
-                oldQuickTime = input;
             }
 
         }
@@ -158,7 +157,6 @@ public class PlayerController : BeatBehaviour
 
     protected override void OnBeatRangeExit()
     {
-
         beatHitConsumed = false;
     }
 
@@ -267,14 +265,14 @@ public class PlayerController : BeatBehaviour
     {
         if(noOnBeatRequired)
         {
-            if ((input.LB || input.A) )
+            if ((input.LBClicked || input.AClicked) )
             {
                 TryDash();
             }
         }
         else
         {
-            if ((input.LB || input.A) && beatRangeCloseness > 0)
+            if ((input.LB || input.A) && beatRangeCloseness > 0.7f)
             {
                 TryDash();
             }
@@ -288,7 +286,7 @@ public class PlayerController : BeatBehaviour
 
     private void UpdateAutoAttack(InputPackage input)
     {
-        if ((input.RB || input.X) && beatRangeCloseness > 0)
+        if ((input.RB || input.X) && beatRangeCloseness > 0.7f)
         {
             TryNormalAttack();
         }
@@ -305,7 +303,7 @@ public class PlayerController : BeatBehaviour
 
     private void UpdateMultiBeatAttack(InputPackage input)
     {
-        if ((input.RB || input.X) && multiBeatState <= 0)
+        if ((input.RBClicked || input.XClicked) && multiBeatState <= 0)
         {
              if (state == State.Move || state == State.None)
              {
@@ -315,7 +313,6 @@ public class PlayerController : BeatBehaviour
                  multiBeatState = 0;
              }
         }
-
     }
 
     private void TryDash()
@@ -346,7 +343,7 @@ public class PlayerController : BeatBehaviour
     private void TriggerCorrectHitEffect()
     {
         flashValue = 100;
-        Debug.Log("Trigger Hit");
+        Instantiate(particleOnBeatHit, weapon.transform.position, Quaternion.identity);
     }
 
     public enum State

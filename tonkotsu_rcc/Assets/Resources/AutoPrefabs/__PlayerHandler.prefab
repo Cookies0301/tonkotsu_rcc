@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
-  spawnPlayer: 0
-  playerPrefab: {fileID: 6901386057081400046, guid: de6bb40a3313d4743955e4b2d25478a9,
+  autoBeatPlayer: {fileID: 6901386057081400046, guid: de6bb40a3313d4743955e4b2d25478a9,
     type: 3}
+  multiBeatPlayer: {fileID: 6901386057081400046, guid: 06c8704c6dcd4864d8ae78c237207ea6,
+    type: 3}
+  playerType: 0

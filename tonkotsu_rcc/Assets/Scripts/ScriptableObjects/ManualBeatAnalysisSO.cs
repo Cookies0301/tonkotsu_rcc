@@ -14,6 +14,9 @@ public class ManualBeatAnalysisSO : AnalysisSO
     {
         var results = new List<int>();
 
+        spectrum = new float[Clip.samples];
+        Clip.GetData(spectrum, 0);
+
         for (int i = initialSampleOffset; i < Clip.samples; i+= samplePerBeat)
         {
             results.Add(i);
