@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1196510fc95a8234295c191cec43f6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 15
+  attackRange: 30
   ragdollForce: 700
   ragdoll: {fileID: 8139484677318392416, guid: 992808647fb9a194c94afc8d670bc87a, type: 3}
   movingBoolParameter: Move
