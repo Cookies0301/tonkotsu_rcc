@@ -13,9 +13,14 @@ public class BeatHandler : Singleton<BeatHandler>
     private AnalysisSO beatAnalysis;
     [SerializeField]
     private List<Texture2D> spectrumTexture;
+
+    //visualization
     [SerializeField]
     [Range(0, 300)]
     private int visualOffsetX = 0;
+    int visSampleJump = 1000;
+    int visRange = 0;
+    int visOffset = 0;
 
     private static float timeSample = 0;
 
@@ -120,29 +125,37 @@ public class BeatHandler : Singleton<BeatHandler>
         {
             float heightMulti = 100;
             float widthMulti = 1;
-            int sampleJump = 600;
             float viewWidth = Screen.width - visualOffsetX - 10;
+
+            visSampleJump = (int) GUI.HorizontalSlider(new Rect(visualOffsetX, heightMulti, 100, 10),visSampleJump, 300, 3000);
+            GUI.Label(new Rect(visualOffsetX + 100, heightMulti, 100, 20), visSampleJump.ToString());
+
+            visRange = (int)GUI.HorizontalSlider(new Rect(visualOffsetX, heightMulti + 20, 100, 10), visRange, 0, 20000);
+            GUI.Label(new Rect(visualOffsetX + 100, heightMulti +20, 100, 20), visRange.ToString());
+
+            visOffset = (int)GUI.HorizontalSlider(new Rect(visualOffsetX, heightMulti + 40, 100, 10), visOffset, -20000, 20000);
+            GUI.Label(new Rect(visualOffsetX + 100, heightMulti + 40, 100, 20), visOffset.ToString());
 
             for (int i = -visualOffsetX; i < viewWidth; i++)
             {
-                if(spectrum.Length < i * sampleJump + sourceWave.timeSamples)
+                if(spectrum.Length < i * visSampleJump + sourceWave.timeSamples)
                 {
                     break;
                 }
 
-                if(i * sampleJump +sourceWave.timeSamples < 0)
+                if(i * visSampleJump +sourceWave.timeSamples < 0)
                 {
                     continue;
                 }
 
-                int currSample = Mathf.FloorToInt(sourceWave.timeSamples/sampleJump)*sampleJump;
+                int currSample = Mathf.FloorToInt(sourceWave.timeSamples/visSampleJump)*visSampleJump;
 
-                GUI.DrawTexture(new Rect(visualOffsetX + i * widthMulti, 5, widthMulti, heightMulti * Mathf.Abs(spectrum[(i * sampleJump) + currSample])), spectrumTexture[0]);
+                GUI.DrawTexture(new Rect(visualOffsetX + i * widthMulti, 5, widthMulti, heightMulti * Mathf.Abs(spectrum[(i * visSampleJump) + currSample])), spectrumTexture[0]);
             }
 
             for (int j = 0; j < beatAnalysis.ResultList.Count; j++)
             {
-                var x = visualOffsetX + (beatAnalysis.ResultList[j] - sourceWave.timeSamples) / sampleJump;
+                var x = visualOffsetX + (beatAnalysis.ResultList[j] - sourceWave.timeSamples) / visSampleJump;
 
                 if (x < 0)
                 {
@@ -159,7 +172,7 @@ public class BeatHandler : Singleton<BeatHandler>
 
             for (int k = 0; k < controllerMarkers.Count; k++)
             {
-                int pos = Mathf.FloorToInt((controllerMarkers[k]- sourceWave.timeSamples)/ sampleJump);
+                int pos = Mathf.FloorToInt((controllerMarkers[k]- sourceWave.timeSamples)/ visSampleJump);
 
                 if(visualOffsetX + pos > 0)
                 {
