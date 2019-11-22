@@ -46,7 +46,7 @@ public class PlayerController : BeatBehaviour
     [BoxGroup("Weapon")]
     [SerializeField] GameObject weapon;
 
-    [SerializeField] GameObject particleOnBeatHit, indicator;
+    [SerializeField] GameObject[] particlesOnBeatHit, indicators;
 
     [SerializeField] Transform indicatorParent;
 
@@ -94,7 +94,6 @@ public class PlayerController : BeatBehaviour
             UpdateAutoAttack(input);
         }
 
-
         rigidbody.velocity = new Vector3(rigidbody.velocity.x * rigidbodyDrag, rigidbody.velocity.y, rigidbody.velocity.z * rigidbodyDrag);
         flashValue = Mathf.Clamp(flashValue -= Time.deltaTime * 300, 0, 100);
         weapon.GetComponent<Renderer>().material.SetFloat("Flash", flashValue);
@@ -117,15 +116,7 @@ public class PlayerController : BeatBehaviour
                 {
                     if (!beatHitConsumed)
                     {
-                        switch (attackEffects[multiBeatState])
-                        {
-                            case BeatEffectOnHit.Boom:
-                                TriggerCorrectHitEffect(true);
-                                break;
-                            case BeatEffectOnHit.SwordFlash:
-                                TriggerCorrectHitEffect(false);
-                                break;
-                        }
+                        TriggerCorrectHitEffect(attackEffects[multiBeatState]);
                         beatHitConsumed = true;
                     }
                 }
@@ -138,7 +129,7 @@ public class PlayerController : BeatBehaviour
                 {
                     if (!beatHitConsumed)
                     {
-                        TriggerCorrectHitEffect();
+                        TriggerCorrectHitEffect(BeatEffectOnHit.Nothing);
                         beatHitConsumed = true;
                     }
                 }
@@ -165,26 +156,29 @@ public class PlayerController : BeatBehaviour
                 timeTracker = 0;
             }
         }
+
+        if (multiBeatState > 0)
+        {
+            if (multiBeatState >= 5)
+            {
+                return;
+            }
+
+            if (attackEffects[multiBeatState] != BeatEffectOnHit.Nothing)
+            {
+                foreach (var indicator in indicators)
+                {
+                    var go = Instantiate(indicator, indicatorParent);
+                    go.transform.localPosition = Vector3.zero;
+                    go.transform.localScale = new Vector3(1 / transform.lossyScale.x, 1 / transform.lossyScale.y, 1 / transform.lossyScale.z);
+                }
+            }
+        }
     }
 
     protected override void OnBeatRangeExit()
     {
         beatHitConsumed = false;
-
-        if (multiBeatState >= 0)
-        {
-            if(multiBeatState >= 4)
-            {
-                return;
-            }
-
-            if(attackEffects[multiBeatState+1] != BeatEffectOnHit.Nothing)
-            {
-                var go = Instantiate(indicator, indicatorParent);
-                go.transform.localPosition = Vector3.zero;
-                go.transform.localScale = new Vector3(1 / transform.lossyScale.x, 1 / transform.lossyScale.y, 1 / transform.lossyScale.z);
-            }
-        }
     }
 
     private void Move(Vector3 inputDir, float force, float maxSpeed)
@@ -249,6 +243,7 @@ public class PlayerController : BeatBehaviour
             animator.SetBool(attackBoolParameter, false);
             animator.SetFloat(walkFloatParameter, 0);
             weapon.SetActive(false);
+            weapon.transform.localScale = Vector3.one;
         }
     }
 
@@ -372,12 +367,26 @@ public class PlayerController : BeatBehaviour
         weapon.SetActive(true);
     }
 
-    private void TriggerCorrectHitEffect(bool final = true)
+    private void TriggerCorrectHitEffect(BeatEffectOnHit effect)
     {
-        flashValue = 100;
+        if(effect != BeatEffectOnHit.Nothing)
+        {
+            flashValue = 100;
+        }
 
-        if(final)
-        Instantiate(particleOnBeatHit, weapon.transform.position, transform.rotation);
+        switch (effect)
+        {
+            case BeatEffectOnHit.IncreaseSize:
+                weapon.transform.localScale = Vector3.one * 2;
+                break;
+
+            case BeatEffectOnHit.Boom:
+                foreach (var particle in particlesOnBeatHit)
+                {
+                    Instantiate(particle, weapon.transform.position, transform.rotation);
+                }
+                break;
+        }
     }
 
     public enum State
@@ -391,7 +400,7 @@ public class PlayerController : BeatBehaviour
     public enum BeatEffectOnHit
     {
         Nothing,
-        SwordFlash,
+        IncreaseSize,
         Boom
     }
 }
