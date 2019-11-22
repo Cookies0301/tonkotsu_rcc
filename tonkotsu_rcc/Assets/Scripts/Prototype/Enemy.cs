@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour, IDamagable
     [BoxGroup("Animation")]
     [SerializeField] string movingBoolParameter, attackingBoolParameter;
 
+    [SerializeField] GameObject weapon;
+
     NavMeshAgent agent;
     Animator animator;
     bool hit;
@@ -37,11 +39,13 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             agent.SetDestination(PlayerHandler.Player.position);
             animator.SetBool(movingBoolParameter, true);
+            weapon.SetActive(true);
         }
         else
         {
             agent.SetDestination(transform.position);
             animator.SetBool(movingBoolParameter, false);
+            weapon.SetActive(false);
         }
 
         if(Vector3.Distance(transform.position, PlayerHandler.Player.position) < hitRange)
