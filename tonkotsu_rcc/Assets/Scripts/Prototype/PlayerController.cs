@@ -46,6 +46,8 @@ public class PlayerController : BeatBehaviour
     [BoxGroup("Weapon")]
     [SerializeField] GameObject weapon;
 
+    [SerializeField] GameObject particleOnBeatHit;
+
     [SerializeField]
     [ReadOnly]
     int multiBeatState;
@@ -341,7 +343,7 @@ public class PlayerController : BeatBehaviour
     private void TriggerCorrectHitEffect()
     {
         flashValue = 100;
-        Debug.Log("Trigger Hit");
+        Instantiate(particleOnBeatHit, weapon.transform.position, Quaternion.identity);
     }
 
     public enum State
