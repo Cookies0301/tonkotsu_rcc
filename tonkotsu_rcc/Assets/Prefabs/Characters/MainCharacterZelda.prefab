@@ -8467,6 +8467,7 @@ MonoBehaviour:
     type: 3}
   indicator: {fileID: 2094502425225703181, guid: 6df02440f96aaef4a9918ba48dd95fd5,
     type: 3}
+  indicatorParent: {fileID: 6788634249473413943}
   attackEffects: 0000000001000000000000000000000002000000
   multiBeatState: 0
   beatHitConsumed: 0
@@ -11501,7 +11502,7 @@ PrefabInstance:
     - target: {fileID: 6363793857394706114, guid: 2d51387acaa26c545b8ac818d308239e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.622
+      value: 0.053
       objectReference: {fileID: 0}
     - target: {fileID: 6363793857394706114, guid: 2d51387acaa26c545b8ac818d308239e,
         type: 3}
@@ -11543,17 +11544,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5945991001485045256, guid: 2d51387acaa26c545b8ac818d308239e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d51387acaa26c545b8ac818d308239e, type: 3}
+--- !u!1 &3527091491901833668 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4341692930627091707, guid: 2d51387acaa26c545b8ac818d308239e,
+    type: 3}
+  m_PrefabInstance: {fileID: 914923081083305279}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6116672770703473661 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6363793857394706114, guid: 2d51387acaa26c545b8ac818d308239e,
     type: 3}
   m_PrefabInstance: {fileID: 914923081083305279}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3527091491901833668 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4341692930627091707, guid: 2d51387acaa26c545b8ac818d308239e,
+--- !u!4 &6788634249473413943 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5945991001485045256, guid: 2d51387acaa26c545b8ac818d308239e,
     type: 3}
   m_PrefabInstance: {fileID: 914923081083305279}
   m_PrefabAsset: {fileID: 0}
