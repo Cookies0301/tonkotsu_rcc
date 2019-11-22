@@ -7,13 +7,13 @@ using NaughtyAttributes;
 public class Enemy : MonoBehaviour, IDamagable
 {
     [BoxGroup("Enemy")]
-    [SerializeField] float attackRange, ragdollForce;
+    [SerializeField] float attackRange, ragdollForce, hitRange;
 
     [BoxGroup("Enemy")]
     [SerializeField] GameObject ragdoll;
 
     [BoxGroup("Animation")]
-    [SerializeField] string movingBoolParameter;
+    [SerializeField] string movingBoolParameter, attackingBoolParameter;
 
     NavMeshAgent agent;
     Animator animator;
@@ -43,6 +43,17 @@ public class Enemy : MonoBehaviour, IDamagable
             agent.SetDestination(transform.position);
             animator.SetBool(movingBoolParameter, false);
         }
+
+        if(Vector3.Distance(transform.position, PlayerHandler.Player.position) < hitRange)
+        {
+            animator.SetBool(attackingBoolParameter, true);
+            Debug.Log("Attack");
+        }
+        else
+        {
+            animator.SetBool(attackingBoolParameter, false);
+        }
+
     }
 
     private void OnDrawGizmosSelected()
