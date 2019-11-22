@@ -113,7 +113,7 @@ public class PlayerController : BeatBehaviour
                 {
                     if (!beatHitConsumed)
                     {
-                        TriggerCorrectHitEffect();
+                        TriggerCorrectHitEffect(multiBeatState == 4);
                         beatHitConsumed = true;
                     }
                 }
@@ -340,9 +340,11 @@ public class PlayerController : BeatBehaviour
         weapon.SetActive(true);
     }
 
-    private void TriggerCorrectHitEffect()
+    private void TriggerCorrectHitEffect(bool final = true)
     {
         flashValue = 100;
+
+        if(final)
         Instantiate(particleOnBeatHit, weapon.transform.position, Quaternion.identity);
     }
 
