@@ -361,8 +361,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 15
   ragdollForce: 700
+  hitRange: 1.25
   ragdoll: {fileID: 8139484677318392416, guid: 992808647fb9a194c94afc8d670bc87a, type: 3}
   movingBoolParameter: Move
+  attackingBoolParameter: Attack
 --- !u!95 &402350411
 Animator:
   serializedVersion: 3
