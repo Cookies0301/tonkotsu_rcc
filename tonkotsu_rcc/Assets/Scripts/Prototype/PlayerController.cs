@@ -48,6 +48,8 @@ public class PlayerController : BeatBehaviour
 
     [SerializeField] GameObject particleOnBeatHit;
 
+    [SerializeField] BeatEffectOnHit[] attackEffects;
+
     [SerializeField]
     [ReadOnly]
     int multiBeatState;
@@ -113,7 +115,15 @@ public class PlayerController : BeatBehaviour
                 {
                     if (!beatHitConsumed)
                     {
-                        TriggerCorrectHitEffect();
+                        switch (attackEffects[multiBeatState])
+                        {
+                            case BeatEffectOnHit.Boom:
+                                TriggerCorrectHitEffect(true);
+                                break;
+                            case BeatEffectOnHit.SwordFlash:
+                                TriggerCorrectHitEffect(false);
+                                break;
+                        }
                         beatHitConsumed = true;
                     }
                 }
@@ -340,9 +350,11 @@ public class PlayerController : BeatBehaviour
         weapon.SetActive(true);
     }
 
-    private void TriggerCorrectHitEffect()
+    private void TriggerCorrectHitEffect(bool final = true)
     {
         flashValue = 100;
+
+        if(final)
         Instantiate(particleOnBeatHit, weapon.transform.position, Quaternion.identity);
     }
 
@@ -352,5 +364,12 @@ public class PlayerController : BeatBehaviour
         Move,
         Attack,
         Dash
+    }
+
+    public enum BeatEffectOnHit
+    {
+        Nothing,
+        SwordFlash,
+        Boom
     }
 }
