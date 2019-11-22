@@ -8450,7 +8450,7 @@ MonoBehaviour:
   dashVelocity: 30
   attackVelocity: 5
   rigidbodyDrag: 0.9
-  maxRotPerAttackPerSec: 90
+  maxRotPerAttackPerSec: 720
   maxRotPerWalkPerSec: 720
   state: 0
   walkToIdleTime: 0.5
@@ -8463,12 +8463,13 @@ MonoBehaviour:
   attackBoolParameter: Attack
   animationVelocityLerpSpeed: 0.1
   weapon: {fileID: 3527091491901833668}
-  particleOnBeatHit: {fileID: 2537798418972149850, guid: a5cebb9d69139c040bb4a37727d01c8c,
-    type: 3}
-  indicator: {fileID: 2094502425225703181, guid: 6df02440f96aaef4a9918ba48dd95fd5,
-    type: 3}
+  particlesOnBeatHit:
+  - {fileID: 5418442751801318887, guid: 28ffd1745ea17644a932f5fac8d605f5, type: 3}
+  - {fileID: 2537798418972149850, guid: a5cebb9d69139c040bb4a37727d01c8c, type: 3}
+  indicators:
+  - {fileID: 2094502425225703181, guid: 6df02440f96aaef4a9918ba48dd95fd5, type: 3}
   indicatorParent: {fileID: 6788634249473413943}
-  attackEffects: 0000000001000000000000000000000002000000
+  attackEffects: 0000000000000000000000000100000002000000
   multiBeatState: 0
   beatHitConsumed: 0
 --- !u!95 &5939961681764191608
@@ -11542,11 +11543,6 @@ PrefabInstance:
     - target: {fileID: 6363793857394706114, guid: 2d51387acaa26c545b8ac818d308239e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5945991001485045256, guid: 2d51387acaa26c545b8ac818d308239e,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

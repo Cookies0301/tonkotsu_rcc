@@ -21,6 +21,18 @@ public class Enemy : MonoBehaviour, IDamagable
     Animator animator;
     bool hit;
 
+    public static event System.Action onEnemySpawn;
+    public static event System.Action onEnemyDeath;
+
+    private void Awake()
+    {
+        onEnemySpawn?.Invoke();
+    }
+
+    private void OnDestroy() 
+    {
+        onEnemyDeath?.Invoke();
+    }
 
     private void Start()
     {
@@ -51,7 +63,6 @@ public class Enemy : MonoBehaviour, IDamagable
         if(Vector3.Distance(transform.position, PlayerHandler.Player.position) < hitRange)
         {
             animator.SetBool(attackingBoolParameter, true);
-            Debug.Log("Attack");
         }
         else
         {
