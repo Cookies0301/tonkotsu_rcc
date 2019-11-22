@@ -142,7 +142,19 @@ public class BeatHandler : Singleton<BeatHandler>
 
             for (int j = 0; j < beatAnalysis.ResultList.Count; j++)
             {
-                GUI.DrawTexture(new Rect(visualOffsetX + (beatAnalysis.ResultList[j] - sourceWave.timeSamples) / sampleJump, 5, widthMulti, heightMulti), spectrumTexture[1]);
+                var x = visualOffsetX + (beatAnalysis.ResultList[j] - sourceWave.timeSamples) / sampleJump;
+
+                if (x < 0)
+                {
+                    continue;
+                }
+
+                if (x >= Screen.width)
+                {
+                    break;
+                }
+
+                GUI.DrawTexture(new Rect(x, 5, widthMulti, heightMulti), spectrumTexture[1]);
             }
 
             for (int k = 0; k < controllerMarkers.Count; k++)
