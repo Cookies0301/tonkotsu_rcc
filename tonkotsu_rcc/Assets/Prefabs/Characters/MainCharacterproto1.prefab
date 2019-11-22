@@ -2004,7 +2004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7342112eb2f3d7f4a82dc78ffadc9a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onBeatRangeWindow: 8000
+  onBeatRangeWindow: 6000
   onBeatRangeDelay: 0
   camera: {fileID: 0}
   virtualController: {fileID: 668368666}
@@ -2022,7 +2022,7 @@ MonoBehaviour:
   state: 0
   walkToIdleTime: 0.5
   attackTime: 0.35
-  dashTime: 0.25
+  dashTime: 0.2
   timeTracker: 0
   animator: {fileID: 5939961681764191608}
   walkFloatParameter: MovementSpeed
