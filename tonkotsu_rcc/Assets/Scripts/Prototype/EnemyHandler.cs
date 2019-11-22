@@ -13,13 +13,15 @@ public class EnemyHandler : Singleton<EnemyHandler>
         base.Awake();
 
         Enemy.onEnemySpawn += AddEnemy;
+        Enemy.onEnemySpawn += RemoveEnemy;
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
 
-        Enemy.onEnemySpawn += RemoveEnemy;
+        Enemy.onEnemySpawn -= AddEnemy;
+        Enemy.onEnemySpawn -= RemoveEnemy;
     }
 
     private void AddEnemy()
