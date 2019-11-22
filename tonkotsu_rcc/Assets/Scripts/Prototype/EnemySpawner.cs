@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] bool enemiesHaveRandomOffset = false;
     [ShowIf("enemiesHaveRandomOffset")]
     [SerializeField] float offsetRange = 1f;
+    
+    [SerializeField] static int enemyMaxCount = 50;
 
 
 
@@ -34,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
                 continue;
             }
 
-            if(Vector3.Distance(PlayerHandler.Player.position, transform.position) > range)
+            if(Vector3.Distance(PlayerHandler.Player.position, transform.position) > range && EnemyHandler.Instance.CurrentEnemyCount < enemyMaxCount)
             {
                 continue;
             }
