@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
                 continue;
             }
 
-            if(Vector3.Distance(PlayerHandler.Player.position, transform.position) > range || EnemyHandler.Instance.CurrentEnemyCount < enemyMaxCount)
+            if(Vector3.Distance(PlayerHandler.Player.position, transform.position) > range || EnemyHandler.Instance.CurrentEnemyCount > enemyMaxCount)
             {
                 continue;
             }
