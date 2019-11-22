@@ -24,11 +24,6 @@ public class Enemy : MonoBehaviour, IDamagable
     public static event System.Action onEnemySpawn;
     public static event System.Action onEnemyDeath;
 
-    private void Awake()
-    {
-        onEnemySpawn?.Invoke();
-    }
-
     private void OnDestroy() 
     {
         onEnemyDeath?.Invoke();
@@ -36,6 +31,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void Start()
     {
+        onEnemySpawn?.Invoke();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
     }
