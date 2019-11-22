@@ -13,7 +13,7 @@ public class HitboxExpander : MonoBehaviour
 
     void Update()
     {
-        if(gameObject.transform.localScale.x <= targetFinalScale.x)
+        if(gameObject.transform.localScale.x < targetFinalScale.x)
         {
             gameObject.transform.localScale = Vector3.Lerp(gameObject.transform.localScale, targetFinalScale, speed);
         }

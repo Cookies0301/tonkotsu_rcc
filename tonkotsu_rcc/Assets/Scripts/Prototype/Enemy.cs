@@ -21,9 +21,17 @@ public class Enemy : MonoBehaviour, IDamagable
     Animator animator;
     bool hit;
 
+    public static event System.Action onEnemySpawn;
+    public static event System.Action onEnemyDeath;
+
+    private void OnDestroy() 
+    {
+        onEnemyDeath?.Invoke();
+    }
 
     private void Start()
     {
+        onEnemySpawn?.Invoke();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
     }
