@@ -60,6 +60,8 @@ public class PlayerController : BeatBehaviour
     float prevRotationAngle;
     float flashValue = 0;
 
+    public Camera Camera { get => camera; set => camera = value;}
+
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
