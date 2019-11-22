@@ -51,7 +51,6 @@ public class Enemy : MonoBehaviour, IDamagable
         if(Vector3.Distance(transform.position, PlayerHandler.Player.position) < hitRange)
         {
             animator.SetBool(attackingBoolParameter, true);
-            Debug.Log("Attack");
         }
         else
         {
