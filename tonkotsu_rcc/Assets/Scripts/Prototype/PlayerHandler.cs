@@ -30,7 +30,7 @@ public class PlayerHandler : Singleton<PlayerHandler>
     {
         base.Awake();
 
-        if (GameSettings.SpawnPlayer)
+        if (GameSettings.Instance.SavedData.SpawnPlayer)
         {
             var go = Instantiate(autoBeatPlayer);
 

@@ -17,10 +17,10 @@ public class TestSettingsWindow : EditorWindow
     {
         //General Settings
         GUILayout.Label("General Settings:", EditorStyles.boldLabel);
-        GameSettings.DisableSound = EditorGUILayout.Toggle("Disable Sound", GameSettings.DisableSound);
+        GameSettings.Instance.SavedData.DisableSound = EditorGUILayout.Toggle("Disable Sound", GameSettings.Instance.SavedData.DisableSound);
 
         //Spawn Settings
         GUILayout.Label("Spawn Settings:", EditorStyles.boldLabel);
-        GameSettings.SpawnPlayer = EditorGUILayout.Toggle("Spawn Player", GameSettings.SpawnPlayer);       
+        GameSettings.Instance.SavedData.SpawnPlayer = EditorGUILayout.Toggle("Spawn Player", GameSettings.Instance.SavedData.SpawnPlayer);       
     }
 }
