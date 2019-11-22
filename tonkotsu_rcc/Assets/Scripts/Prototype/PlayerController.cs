@@ -88,6 +88,13 @@ public class PlayerController : BeatBehaviour
         if (secondPrototype)
         {
             UpdateMultiBeatAttack(input);
+
+            bool attackInput = (virtualController.GetPackage().RBClicked || (virtualController.GetPackage().XClicked));
+            if (attackInput)
+            {
+                beatHitConsumed = true;
+            }
+
         }
         else
         {
@@ -96,7 +103,7 @@ public class PlayerController : BeatBehaviour
 
         rigidbody.velocity = new Vector3(rigidbody.velocity.x * rigidbodyDrag, rigidbody.velocity.y, rigidbody.velocity.z * rigidbodyDrag);
         flashValue = Mathf.Clamp(flashValue -= Time.deltaTime * 300, 0, 100);
-        weapon.GetComponent<Renderer>().material.SetFloat("Flash", flashValue);
+        weapon.GetComponentInChildren<Renderer>().material.SetFloat("Flash", flashValue);
     }
 
     private void LateUpdate()
@@ -243,7 +250,7 @@ public class PlayerController : BeatBehaviour
             animator.SetBool(attackBoolParameter, false);
             animator.SetFloat(walkFloatParameter, 0);
             weapon.SetActive(false);
-            weapon.transform.localScale = Vector3.one;
+            weapon.GetComponentInChildren<Damager>().transform.localScale = Vector3.one;
         }
     }
 
@@ -377,7 +384,7 @@ public class PlayerController : BeatBehaviour
         switch (effect)
         {
             case BeatEffectOnHit.IncreaseSize:
-                weapon.transform.localScale = Vector3.one * 2;
+                weapon.GetComponentInChildren<Damager>().transform.localScale = Vector3.one * 2;
                 break;
 
             case BeatEffectOnHit.Boom:
