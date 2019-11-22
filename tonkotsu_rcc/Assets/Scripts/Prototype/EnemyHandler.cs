@@ -13,7 +13,7 @@ public class EnemyHandler : Singleton<EnemyHandler>
         base.Awake();
 
         Enemy.onEnemySpawn += AddEnemy;
-        Enemy.onEnemySpawn += RemoveEnemy;
+        Enemy.onEnemyDeath += RemoveEnemy;
     }
 
     protected override void OnDestroy()
@@ -21,7 +21,7 @@ public class EnemyHandler : Singleton<EnemyHandler>
         base.OnDestroy();
 
         Enemy.onEnemySpawn -= AddEnemy;
-        Enemy.onEnemySpawn -= RemoveEnemy;
+        Enemy.onEnemyDeath -= RemoveEnemy;
     }
 
     private void AddEnemy()
