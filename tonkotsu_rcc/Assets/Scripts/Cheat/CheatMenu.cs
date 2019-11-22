@@ -4,6 +4,7 @@ using UnityEngine;
 using NaughtyAttributes;
 using System.Reflection;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 //////////////////////
 /// Singleton, visualizes cheats, and methods marked with [CheatAtribute] 
@@ -60,21 +61,12 @@ public class CheatMenu : Singleton<CheatMenu>
     private void FindCheats()
     {
         //Find all objects in scene
-        var objects = GameObject.FindObjectsOfType((typeof(GameObject)));
+        var rootObjects = SceneManager.GetActiveScene().GetRootGameObjects();
 
-        Debug.Log("Objects: " + objects.Length);
-
-        GameObject[] gameObjects = new GameObject[objects.Length];
-        Debug.Log("GameObjects: " + gameObjects.Length);
-
-        //convert Objects to GameObjects
-        int index = 0;
-        foreach (Object specificObject in objects)
-        {
-            gameObjects[index] = specificObject as GameObject;
-            index++;
-        }
-        index = 0;
+        Debug.Log("Objects: " + rootObjects.Length);
+        
+        GameObject[] gameObjects = AddChildren(rootObjects);
+        
 
         //Get all their Components
         List<Component> components = new List<Component>();
@@ -99,6 +91,29 @@ public class CheatMenu : Singleton<CheatMenu>
         }
     }
 
+    private GameObject[] AddChildren(GameObject[] rootObjects)
+    {
+        var foundObjects = new List<GameObject>();
+
+        for(int i = 0; i < rootObjects.Length; i++)
+        {
+            foundObjects.Add(rootObjects[i]);
+
+            AddDescendants(rootObjects[i], foundObjects);
+        }
+
+        return foundObjects.ToArray();
+    }
+
+    private void AddDescendants(GameObject gameObject, List<GameObject> foundObjects)
+    {
+        foreach(Transform child in gameObject.transform)
+        {
+            foundObjects.Add(child.gameObject);
+            AddDescendants(child.gameObject, foundObjects);
+        }
+    }
+
     private void SaveAllCheatMethods(Component component)
     {
         MethodInfo[] methods = component.GetType().GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance)
@@ -106,11 +121,8 @@ public class CheatMenu : Singleton<CheatMenu>
 
         foreach (var method in methods)
         {
-            if (!methodsList.Contains(method))
-            {
-                methodsList.Add(method);
-                componentListToMethod.Add(component);
-            }
+            methodsList.Add(method);
+            componentListToMethod.Add(component);
         }
     }
 
