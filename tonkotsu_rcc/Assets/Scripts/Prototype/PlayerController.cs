@@ -48,6 +48,8 @@ public class PlayerController : BeatBehaviour
 
     [SerializeField] GameObject particleOnBeatHit, indicator;
 
+    [SerializeField] Vector3 indicatorOffset;
+
     [SerializeField] BeatEffectOnHit[] attackEffects;
 
     [SerializeField]
@@ -178,7 +180,7 @@ public class PlayerController : BeatBehaviour
 
             if(attackEffects[multiBeatState+1] != BeatEffectOnHit.Nothing)
             {
-                Instantiate(indicator, transform.position + Vector3.up * 3, Quaternion.identity, transform);
+                Instantiate(indicator, transform.position + indicatorOffset, Quaternion.identity, transform);
             }
         }
     }
