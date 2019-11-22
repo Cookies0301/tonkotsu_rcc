@@ -8465,6 +8465,7 @@ MonoBehaviour:
   weapon: {fileID: 3527091491901833668}
   particleOnBeatHit: {fileID: 2537798418972149850, guid: a5cebb9d69139c040bb4a37727d01c8c,
     type: 3}
+  attackEffects: 0000000001000000000000000000000002000000
   multiBeatState: 0
   beatHitConsumed: 0
 --- !u!95 &5939961681764191608
