@@ -62,10 +62,9 @@ public class CheatMenu : Singleton<CheatMenu>
     {
         //Find all objects in scene
         var rootObjects = SceneManager.GetActiveScene().GetRootGameObjects();
-
-        Debug.Log("Objects: " + rootObjects.Length);
         
-        GameObject[] gameObjects = AddChildren(rootObjects);
+        GameObject[] gameObjectsTemp = AddChildren(rootObjects);
+        GameObject[] gameObjects = AddDontDestroyOnLoadObjects(gameObjectsTemp);
         
 
         //Get all their Components
@@ -81,8 +80,6 @@ public class CheatMenu : Singleton<CheatMenu>
                     components.Add(component);
                 }
             }
-
-            Debug.Log("Components: " + components.Count);
 
             for (int i = 0; i < components.Count; i++)
             {
@@ -105,14 +102,53 @@ public class CheatMenu : Singleton<CheatMenu>
         return foundObjects.ToArray();
     }
 
-    private void AddDescendants(GameObject gameObject, List<GameObject> foundObjects)
+    private void AddDescendants(GameObject gameObject,  List<GameObject> addTo)
     {
         foreach(Transform child in gameObject.transform)
         {
-            foundObjects.Add(child.gameObject);
-            AddDescendants(child.gameObject, foundObjects);
+            addTo.Add(child.gameObject);
+            AddDescendants(child.gameObject, addTo);
         }
     }
+
+    private GameObject[] AddDontDestroyOnLoadObjects(GameObject[] gameObjects)
+    {
+        var foundObjects = new List<GameObject>();
+
+        for(int i = 0; i < gameObjects.Length; i++)
+        {
+            foundObjects.Add(gameObjects[i]);
+        }
+
+        GameObject[] dontDestroyOnLoadRootObjects;
+        GameObject temp = null;
+        
+        try
+        {
+            temp = new GameObject();
+            Object.DontDestroyOnLoad( temp );
+            UnityEngine.SceneManagement.Scene dontDestroyOnLoad = temp.scene;
+            Object.DestroyImmediate( temp );
+            temp = null;
+    
+            dontDestroyOnLoadRootObjects = dontDestroyOnLoad.GetRootGameObjects();
+        }
+        finally
+        {
+            if( temp != null )
+                Object.DestroyImmediate( temp );
+        }
+
+        var dontDestroyOnLoadObjects = AddChildren(dontDestroyOnLoadRootObjects);
+        
+        for(int i = 0; i < dontDestroyOnLoadObjects.Length; i++)
+        {
+            foundObjects.Add(dontDestroyOnLoadObjects[i]);
+        }
+        
+        return foundObjects.ToArray();
+    }
+
 
     private void SaveAllCheatMethods(Component component)
     {
