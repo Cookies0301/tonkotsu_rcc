@@ -66,6 +66,7 @@ public class CheatMenu : Singleton<CheatMenu>
         Debug.Log("Objects: " + rootObjects.Length);
         
         GameObject[] gameObjects = AddChildren(rootObjects);
+        AddDontDestroyOnLoadObjects(gameObjects);
         
 
         //Get all their Components
@@ -113,6 +114,46 @@ public class CheatMenu : Singleton<CheatMenu>
             AddDescendants(child.gameObject, foundObjects);
         }
     }
+
+    private GameObject[] AddDontDestroyOnLoadObjects(GameObject[] gameObjects)
+    {
+        var foundObjects = new List<GameObject>();
+
+        for(int i = 0; i < gameObjects.Length; i++)
+        {
+            foundObjects.Add(gameObjects[i]);
+        }
+
+        GameObject[] dontDestroyOnLoadRootObjects;
+        GameObject temp = null;
+        
+        try
+        {
+            temp = new GameObject();
+            Object.DontDestroyOnLoad( temp );
+            UnityEngine.SceneManagement.Scene dontDestroyOnLoad = temp.scene;
+            Object.DestroyImmediate( temp );
+            temp = null;
+    
+            dontDestroyOnLoadRootObjects = dontDestroyOnLoad.GetRootGameObjects();
+        }
+        finally
+        {
+            if( temp != null )
+                Object.DestroyImmediate( temp );
+        }
+
+        var dontDestroyOnLoadObjects = AddChildren(dontDestroyOnLoadRootObjects);
+
+        for(int i = 0; i < dontDestroyOnLoadObjects.Length; i++)
+        {
+            foundObjects.Add(dontDestroyOnLoadObjects[i]);
+        }
+        
+
+        return foundObjects.ToArray();
+    }
+
 
     private void SaveAllCheatMethods(Component component)
     {
