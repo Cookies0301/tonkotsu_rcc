@@ -2017,8 +2017,8 @@ MonoBehaviour:
   dashVelocity: 30
   attackVelocity: 5
   rigidbodyDrag: 0.9
-  maxRotPerAttackPerSec: 90
-  maxRotPerWalkPerSec: 720
+  maxRotPerAttackPerSec: 10000
+  maxRotPerWalkPerSec: 10000
   state: 0
   walkToIdleTime: 0.5
   attackTime: 0.35
